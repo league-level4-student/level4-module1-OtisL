@@ -118,17 +118,22 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 		switch(e.getKeyCode()) {
 		case KeyEvent.VK_UP: 
 			snake.setDirection(Direction.UP);
+			System.out.println("up");
 			break;
 		case KeyEvent.VK_DOWN: 
 			snake.setDirection(Direction.DOWN);
+			System.out.println("down");
 			break;
 		case KeyEvent.VK_LEFT: 
 			snake.setDirection(Direction.LEFT);
+			System.out.println("left");
 			break;
 		case KeyEvent.VK_RIGHT: 
 			snake.setDirection(Direction.RIGHT);
+			System.out.println("right");
 			break;
 		case KeyEvent.VK_SPACE: 
+			System.out.println("space");
 			snake.feed();
 			break;
 		}
@@ -157,12 +162,18 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 		//1. stop the timer
 		timer.stop();
 		//2. tell the user their snake is dead
-		
 		//3. ask them if they want to play again.
-		
+		int input = JOptionPane.showOptionDialog(null, "Your snake has commited oof and you need to restart. We don't need error info, so you can choose to restart or shut down.", 
+				":(", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);	
 		//4. if they want to play again
 		//   reset the snake and the food and start the timer
 		//   else, exit the game
+		if(input==0) {
+			snake=new Snake(new Location(WIDTH / 2, HEIGHT / 2));
+			setFoodLocation();
+		}else {
+			System.exit(0);
+		}
 		
 	}
 
@@ -174,13 +185,22 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//1. update the snake
-
+		snake.update();
 		//2. if the snake is colliding with its own body 
 		//   or if the snake is out of bounds, call gameOver
-
+		if(snake.isHeadCollidingWithBody()) {
+			gameOver();
+		}
+		if(snake.isOutOfBounds()) {
+			gameOver();
+		}
 		//3. if the location of the head is equal to the location of the food,
 		// 	 feed the snake and set the food location
-
+		if(snake.getHeadLocation()==foodLocation) {
+			snake.feed();
+			setFoodLocation();
+		}
 		//4. call panel.repaint();
+		panel.repaint();
 	}
 }
