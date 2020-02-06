@@ -25,7 +25,25 @@ public class Snake {
 
 	public void feed() {
 		//1. add a new SnakeSegment object to the snake
-		snake.add(new SnakeSegment(snake.get(0).getLocation(), BODY_SIZE));
+		//Location loc = new Location(snake.get(snake.size()-1).getLocation().x+1, snake.get(snake.size()-1).getLocation().y);
+		Location newLoc = null;
+		switch (currentDirection){
+		case RIGHT:
+			newLoc = new Location(snake.get(snake.size()-1).getLocation().x-1, snake.get(snake.size()-1).getLocation().y);
+			break;
+		case LEFT:
+			newLoc = new Location(snake.get(snake.size()-1).getLocation().x+1, snake.get(snake.size()-1).getLocation().y);
+			break;
+		case UP:
+			newLoc = new Location(snake.get(snake.size()-1).getLocation().x, snake.get(snake.size()-1).getLocation().y+1);
+			break;
+		case DOWN:
+			newLoc = new Location(snake.get(snake.size()-1).getLocation().x, snake.get(snake.size()-1).getLocation().y-1);
+			break;
+		}
+
+		SnakeSegment add = new SnakeSegment(newLoc, BODY_SIZE);
+		snake.add(add);
 		System.out.println(snake.size());
 		for(int i=0; i<snake.size(); i++) {
 			System.out.println(snake.get(i).getLocation().x+", "+snake.get(i).getLocation().y);
@@ -61,12 +79,12 @@ public class Snake {
 		for(int i=snake.size()-1; i>0; i--) {
 			//2a. Update each snake segment to the location of the segment 
 			//    in front of it.
-			if(i==snake.size()-1) {
-				snake.get(i).setLocation(newLoc);
-			}else {
-				snake.get(i).setLocation(snake.get(i+1).getLocation());
+			//if(i==snake.size()-1) {
+			//	snake.get(i).setLocation(newLoc);
+			//}else {
+				snake.get(i).setLocation(snake.get(i-1).getLocation());
 			
-			}
+			//}
 		}
 		
 		
@@ -113,13 +131,13 @@ public class Snake {
 		if(head.getLocation().x>=15) {
 			System.out.println("out right");
 			return true;
-		}else if(head.getLocation().x<=0) {
+		}else if(head.getLocation().x<0) {
 			System.out.println("out left");
 			return true;
 		}else if(head.getLocation().y>=12) {
 			System.out.println("out bottom");
 			return true;
-		}else if(head.getLocation().y<=0) {
+		}else if(head.getLocation().y<0) {
 			System.out.println("out top");
 			return true;
 		}else {
@@ -132,7 +150,7 @@ public class Snake {
 	public boolean isHeadCollidingWithBody() {
 		//1. complete the method so it returns true if the head is located
 		//   in the same location as any other body segment
-		for(int i=1; i<snake.size(); i++) {
+		for(/*int i=1; i<snake.size(); i++*/int i=snake.size()-1; i>0; i--) {
 			if(head.getLocation()==snake.get(i).getLocation()) {
 				System.out.println("head collide body");
 				return true;

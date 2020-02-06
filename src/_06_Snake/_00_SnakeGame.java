@@ -163,14 +163,17 @@ public class _00_SnakeGame implements ActionListener, KeyListener {
 		timer.stop();
 		//2. tell the user their snake is dead
 		//3. ask them if they want to play again.
-		int input = JOptionPane.showOptionDialog(null, "Your snake has commited oof and you need to restart. We don't need error info, so you can choose to restart or shut down.", 
-				":(", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, null, null);	
+		String[] options = new String[] { "Restart", "Shut Down" };
+		int input = JOptionPane.showOptionDialog(null, 
+				"Your snake has commited oof and you need to restart. We don't need error info, so you can choose to restart or shut down.", 
+				":(", 0, JOptionPane.ERROR_MESSAGE, null, options, 0);	
 		//4. if they want to play again
 		//   reset the snake and the food and start the timer
 		//   else, exit the game
 		if(input==0) {
 			snake=new Snake(new Location(WIDTH / 2, HEIGHT / 2));
 			setFoodLocation();
+			startGame();
 		}else {
 			System.exit(0);
 		}
