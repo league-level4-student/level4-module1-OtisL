@@ -129,19 +129,14 @@ public class Snake {
 		//1. complete the method so it returns true if the head of the snake is outside of the window
 		//   and false otherwise
 		if(head.getLocation().x>=15) {
-			System.out.println("out right");
 			return true;
 		}else if(head.getLocation().x<0) {
-			System.out.println("out left");
 			return true;
 		}else if(head.getLocation().y>=12) {
-			System.out.println("out bottom");
 			return true;
 		}else if(head.getLocation().y<0) {
-			System.out.println("out top");
 			return true;
 		}else {
-			System.out.println("good");
 			return false;
 		}
 
@@ -150,8 +145,9 @@ public class Snake {
 	public boolean isHeadCollidingWithBody() {
 		//1. complete the method so it returns true if the head is located
 		//   in the same location as any other body segment
-		for(/*int i=1; i<snake.size(); i++*/int i=snake.size()-1; i>0; i--) {
-			if(head.getLocation()==snake.get(i).getLocation()) {
+		/*int i=1; i<snake.size(); i++*/
+		for(int i=snake.size()-1; i>0; i--) {
+			if(head.getLocation().x==snake.get(i).getLocation().x && head.getLocation().y==snake.get(i).getLocation().y) {
 				System.out.println("head collide body");
 				return true;
 			}
